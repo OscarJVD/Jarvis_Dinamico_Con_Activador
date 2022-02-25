@@ -13,7 +13,7 @@ document.getElementById('reposoChicoTrack').addEventListener('play', function ()
   mainBtnsDisabled(false)
 })
 
-// PREGUNTA ABIERTA FERIA EN 10 AÑOS 
+// PREGUNTA ABIERTA FERIA EN 10 AÑOS
 document.getElementById('openQuestionTrack').ontimeupdate = function () {
   // console.log(getPercentage('openQuestionTrack') == 'preend');
   if (getPercentage('openQuestionTrack') == 'preend') {
@@ -42,7 +42,7 @@ document.getElementById('openQuestionChicoTrack').ontimeupdate = function () {
     freeSayFlag = true
   }
 };
-// END PREGUNTA ABIERTA FERIA EN 10 AÑOS 
+// END PREGUNTA ABIERTA FERIA EN 10 AÑOS
 
 // PUNTUACIÓN
 document.getElementById('scoreTrack').ontimeupdate = function () {
@@ -1257,7 +1257,7 @@ document.getElementById('byeSecChicoTrack').ontimeupdate = function () {
 //   flagFirstChicoTrack = false;
 // }
 
-// // PREGUNTA ABIERTA FERIA EN 10 AÑOS 
+// // PREGUNTA ABIERTA FERIA EN 10 AÑOS
 // document.getElementById('openQuestionTrack').ontimeupdate = function () {
 //   // console.log(videoIsEnding('openQuestionTrack') == 'preend');
 //   if (videoIsEnding('openQuestionTrack') == 'preend') {
@@ -1286,7 +1286,7 @@ document.getElementById('byeSecChicoTrack').ontimeupdate = function () {
 //     freeSayFlag = true
 //   }
 // };
-// // END PREGUNTA ABIERTA FERIA EN 10 AÑOS 
+// // END PREGUNTA ABIERTA FERIA EN 10 AÑOS
 
 // // PUNTUACIÓN
 // document.getElementById('scoreTrack').ontimeupdate = function () {
