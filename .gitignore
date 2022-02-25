@@ -6,3 +6,5 @@ envDF
 dialogFlowAPIEnv.json
 dialogFlowAPIEnv
 public/media/Videos/
+public/icons
+.env
