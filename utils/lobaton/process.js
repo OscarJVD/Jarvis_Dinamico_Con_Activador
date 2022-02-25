@@ -16,13 +16,13 @@ const printVideo = async(listener,url, elem) => {
     video.addEventListener("play",()=> listener.dontObey())
     video.addEventListener("pause",()=> listener.obey())
     video.addEventListener("ended",()=> listener.obey())
-    await video.play()
     elem.appendChild(video)
-    return video
+    await video.play()
+    return video.duration
 }
 
 
-function  process(listener,elem) {
+async function process(listener,elem) {
 
     const buttonsMock = [
         {
@@ -61,17 +61,18 @@ function  process(listener,elem) {
         }
     ];
     const addEventToButtons = (listener, buttons, elem)=>{
-        for(let button of buttons){
-            const elemButton = getParsedElementsX(button.button)["id"]
-            elemButton.addEventListener("click",()=> {
-                const video = printVideo(listener,button.videos[0],elem)
-                for(let btn of buttons){
-                    const elemButton = getParsedElementsX(btn.button)["id"]
-                    console.log(elemButton)
-                    elemButton.setAttribute("disabled",true)
+        const buttonsIn = buttons.map(({button:{ id },videos:[ video ]})=> [document.getElementById(id), video] );
+        for(let item of buttonsIn){
+            const [ button, url ] = item;
+            button.addEventListener("click",async()=> {
+                const time = await printVideo(listener,url,elem)
+                for(let itemIn of buttonsIn){
+                    const [ btn ] = itemIn
+                    btn.setAttribute("disabled","on")
+                    console.log(time)
                     setTimeout(() => {
-                        elemButton.removeAttribute("disabled")
-                    }, video.duration * 1000);
+                        btn.removeAttribute("disabled")
+                    }, time * 1000);
                 }
             })
         }
@@ -510,7 +511,7 @@ function  process(listener,elem) {
             printVideo(listener,this.src,this.elem)
        } },
     ];
-    addEventToButtons(listener,buttonsMock, elem);
+    await addEventToButtons(listener,buttonsMock, elem);
     listener.addCommands(mock)
     // const result = await listener.on(["hola"])
 
