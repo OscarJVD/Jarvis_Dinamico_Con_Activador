@@ -113,18 +113,18 @@ Jarvis.on(arrAttachedCommands).then(function (i) {
       let randomGallery = getRandomArbitrary(1, 8)
       if (localStorage.getItem('isGirlAvatarFlag') == 'true') {
 
-        if (random == 1) mountVideo('galeriasMasunoSecTrack')
-        else if (random == 2) mountVideo('galeriasNuncaFirstTrack')
-        else if (random == 3) mountVideo('galeriasNuncaSecTrack')
-        else if (random == 4) mountVideo('galeriasOpeningFirstTrack')
-        else if (random == 5) mountVideo('galeriasOpeningSecTrack')
-        else if (random == 6) mountVideo('galeriasProgramaFirstTrack')
-        else if (random == 7) mountVideo('galeriasProgramaSecTrack')
+        if (randomGallery == 1) mountVideo('galeriasMasunoSecTrack')
+        else if (randomGallery == 2) mountVideo('galeriasNuncaFirstTrack')
+        else if (randomGallery == 3) mountVideo('galeriasNuncaSecTrack')
+        else if (randomGallery == 4) mountVideo('galeriasOpeningFirstTrack')
+        else if (randomGallery == 5) mountVideo('galeriasOpeningSecTrack')
+        else if (randomGallery == 6) mountVideo('galeriasProgramaFirstTrack')
+        else if (randomGallery == 7) mountVideo('galeriasProgramaSecTrack')
         else mountVideo('galeriasArtistasTrack')
       } else {
 
         if (randomGallery == 1) mountVideo('galeriasChicoMasunoSecTrack')
-        else if (randomGallery == 2) mountVideo('galeriasChicoNuncaFirstTrack')
+        else if (randomGallery git remo== 2) mountVideo('galeriasChicoNuncaFirstTrack')
         else if (randomGallery == 3) mountVideo('galeriasChicoNuncaSecTrack')
         else if (randomGallery == 4) mountVideo('galeriasChicoOpeningFirstTrack')
         else if (randomGallery == 5) mountVideo('galeriasChicoOpeningSecTrack')
