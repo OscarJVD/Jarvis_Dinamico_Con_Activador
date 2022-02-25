@@ -69,27 +69,29 @@ function videoEnd(video) {
   document.getElementById('btnNew').classList.remove('blueHover')
 }
 
-async function mountVideo(videoId, videosArr = videoDinamicSrcArr) {
+async function mountVideo(videoId, videosArr = videoDinamicLocalSrcArr) {
+  console.log('VIDEO PARA REPRODUCIR: ', videoId, videosArr)
   // console.log(document.querySelector('video[data-id="baseTrack"]'))
   let baseTrack = document.querySelector('video[data-id="baseTrack"]');
-  let videoObj = null;
+  let videoObj;
 
-  videosArr.forEach(video => {
-    if (videoId == video.id) videoObj = { src: video.src, id: video.id }
+  videosArr.forEach(vid => {
+    console.log(videoId, vid.id)
+    if (videoId == vid.id) videoObj = { src: vid.src, id: vid.id }
   });
 
-  // if (!videoObj || Object.keys(videoObj).length == 0) alert("Hubo un error, contacta con tecnología")
+  if (!videoObj || Object.keys(videoObj).length == 0) return alert("El arreglo de rutas de videos esta mal")
 
   const { src, id } = videoObj
 
-  // baseTrack.children[0].src = src
-  baseTrack.src = src
   baseTrack.id = id
-  baseTrack.style.width = screen.width;
-  baseTrack.style.height = screen.height;
   baseTrack.muted = false
   baseTrack.autoplay = true
   baseTrack.loop = false
+  baseTrack.src = src
+  baseTrack.style.width = screen.width;
+  baseTrack.style.height = screen.height;
+
   if (id != 'reposoTrack' && id != 'reposoChicoTrack') {
     mainBtnsDisabled(true)
     baseTrack.addEventListener('play', function () {
@@ -108,14 +110,13 @@ async function mountVideo(videoId, videosArr = videoDinamicSrcArr) {
       }, 500);
     });
 
-    baseTrack.addEventListener('load', function () {
-      setTimeout(() => {
-        Jarvis.obey();
-      }, 500);
-    });
+    // baseTrack.addEventListener('load', function () {
+    //   setTimeout(() => {
+    //     Jarvis.obey();
+    //   }, 500);
+    // });
   } else if (id == 'reposoTrack' || id == 'reposoChicoTrack') {
     baseTrack.muted = true
-    // baseTrack.autoplay = true
     baseTrack.loop = true
   }
 
@@ -258,27 +259,7 @@ async function mountVideo(videoId, videosArr = videoDinamicSrcArr) {
   // END LISTENERS OR ACTIONS BY VIDEO
 
   baseTrack.load()
-  // canplay - loadeddata
-  baseTrack.addEventListener('canplay',  function () {
-    // Video is loaded and can be played
-    // await baseTrack.play()
-
-    // setTimeout(() => {
-      baseTrack.play()
-    // }, 1000)
-    // const promise = baseTrack.play();
-    // if (promise !== undefined) {
-    //   promise.then(() => {
-    //     console.log('VIDEO REPRODUCIDO');
-    //     // Autoplay started
-    //   }).catch(error => {
-    //     console.log('VIDEO NO REPRODUCIDO', error);
-    //     // Autoplay was prevented.
-    //     video.muted = true;
-    //     video.play();
-    //   });
-    // }
-  }, false);
+  baseTrack.play()
   console.log(document.querySelector('video'))
 }
 
