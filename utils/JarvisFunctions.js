@@ -69,35 +69,44 @@ function videoEnd(video) {
   document.getElementById('btnNew').classList.remove('blueHover')
 }
 
+
 async function mountVideo(videoId, videosArr = videoDinamicLocalSrcArr) {
+  let videoBox = document.getElementById('root-video')
   console.log('VIDEO PARA REPRODUCIR: ', videoId, videosArr)
+  for (let el of videoBox.children) el.remove()
+
   // console.log(document.querySelector('video[data-id="baseTrack"]'))
-  let baseTrack = document.querySelector('video[data-id="baseTrack"]');
+  // let baseTrack = document.querySelector('video[data-id="baseTrack"]');
   let videoObj;
 
   videosArr.forEach(vid => {
-    console.log(videoId, vid.id)
+    // console.log(videoId, vid.id)
     if (videoId == vid.id) videoObj = { src: vid.src, id: vid.id }
   });
 
-  if (!videoObj || Object.keys(videoObj).length == 0) return alert("El arreglo de rutas de videos esta mal")
+  // if (!videoObj || Object.keys(videoObj).length == 0) return alert("El arreglo de rutas de videos esta mal")
 
   const { src, id } = videoObj
 
-  baseTrack.id = id
-  baseTrack.src = src
-  baseTrack.muted = false
-  baseTrack.autoplay = true
-  baseTrack.loop = false
-  baseTrack.style.width = screen.width;
-  baseTrack.style.height = screen.height;
-  
+  // baseTrack.id = id
+  // baseTrack.src = src
+  // baseTrack.muted = false
+  // baseTrack.autoplay = true
+  // baseTrack.loop = false
+  // baseTrack.style.width = screen.width;
+  // baseTrack.style.height = screen.height;
+
+  let baseTrack = document.createElement("video")
+  baseTrack.setAttribute("src", src)
+  baseTrack.setAttribute("width", '100%')
+  baseTrack.setAttribute("class", "videoIA")
+
   if (id != 'reposoTrack' && id != 'reposoChicoTrack') {
     mainBtnsDisabled(true)
     baseTrack.addEventListener('play', function () {
       Jarvis.dontObey();
     });
-    
+
     baseTrack.addEventListener('ended', function () {
       setTimeout(() => {
         Jarvis.obey();
@@ -125,12 +134,12 @@ async function mountVideo(videoId, videosArr = videoDinamicLocalSrcArr) {
     if (videoIsEnding(baseTrack) == 'preend') {
 
       if (id == 'openQuestionTrack' || id == 'openQuestionChicoTrack') {
-        
+
         document.getElementById('buttonsBox').classList.add('d-none');
         document.getElementById('talkBtnBox').style.top = '73.5%'
         document.getElementById('btnActiveRecognizer').dataset.freesay = 'true';
         freeSayFlag = true
-        
+
       } else if (id == 'scoreTrack' || id == 'scoreChicoTrack') {
 
         document.getElementById('buttonsBox').classList.remove('d-none');
@@ -138,14 +147,14 @@ async function mountVideo(videoId, videosArr = videoDinamicLocalSrcArr) {
         document.getElementById('YesOrNoBox').classList.add('d-none');
         document.getElementById('buttonsPartOne').classList.add('d-none');
         document.getElementById('buttonsPartBox').classList.add('d-none');
-        
+
       } else if (id == 'anotherThemeTrack' || id == 'anotherThemeChicoTrack') {
 
         document.getElementById("buttonsPartOne").classList.add('d-none')
         document.getElementById("buttonsPartBox").classList.add('d-none')
         document.getElementById("YesOrNoBox").classList.remove('d-none')
         document.getElementById('talkBtnBox').classList.remove('d-none')
-        
+
       } else if (
         // -------------------- Galerias --------------------------------------------------------
         id == 'galeriasMasunoSecTrack' || id == 'galeriasNuncaFirstTrack' || id == 'galeriasNuncaSecTrack' || id == 'galeriasOpeningFirstTrack' || id == 'galeriasOpeningSecTrack' || id == 'galeriasProgramaFirstTrack' || id == 'galeriasProgramaSecTrack' || id == 'galeriasArtistasTrack'
@@ -158,27 +167,27 @@ async function mountVideo(videoId, videosArr = videoDinamicLocalSrcArr) {
 
         // -------------------- Novedades --------------------------------------------------------
         || id == 'newsFirstTrack' || id == 'newsSecTrack' || id == 'newsThirdTrack'
-        
-        ) {
 
-          timeouts.push(setTimeout(() => {
-            mountVideo('anotherThemeTrack')
-          }, 1500))
-          mainBtnsDisabled(true)
-          
-        } else if (
+      ) {
+
+        timeouts.push(setTimeout(() => {
+          mountVideo('anotherThemeTrack')
+        }, 1500))
+        mainBtnsDisabled(true)
+
+      } else if (
 
         id == 'galeriasChicoMasunoSecTrack' || id == 'galeriasChicoNuncaFirstTrack' || id == 'galeriasChicoNuncaSecTrack' || id == 'galeriasChicoOpeningFirstTrack' || id == 'galeriasChicoOpeningSecTrack' || id == 'galeriasChicoProgramaFirstTrack' || id == 'galeriasChicoProgramaSecTrack' || id == 'galeriasChicoArtistasTrack'
         // -------------------- Arquitectura --------------------------------------------------------
         || id == 'architectureChicoFundacionFirstTrack' || id == 'architectureChicoFundacionSecTrack' || id == 'architectureChicoEspaciosFirstTrack' || id == 'architectureChicoEspaciosSecTrack' || id == 'architectureChicoProgramaTrack' || id == 'architectureChicoSalaTrack' || id == 'architectureChicoVipTrack' || id == 'architectureChicoArcoTrack'
-        
+
         // -------------------- Historia --------------------------------------------------------
         || id == 'historyChicoArcoFirstTrack' || id == 'historyChicoArcoSecTrack' || id == 'historyChicoArcoThirdTrack'
 
         // -------------------- Novedades --------------------------------------------------------
         || id == 'newsChicoFirstTrack' || id == 'newsChicoSecTrack' || id == 'newsChicoThirdTrack'
       ) {
-        
+
         timeouts.push(setTimeout(() => {
           mountVideo('anotherThemeChicoTrack')
         }, 1500))
@@ -190,16 +199,15 @@ async function mountVideo(videoId, videosArr = videoDinamicLocalSrcArr) {
         localStorage.setItem('isGirlAvatarFlag', localStorage.getItem('isGirlAvatarFlag') == 'true' ? false : true);
         if (localStorage.getItem('isGirlAvatarFlag') != 'true')
           mountVideo('reposoChicoTrack');
-          else
+        else
           mountVideo('reposoTrack');
-          
-          document.getElementById('microphoneIcon').classList.remove('d-none')
-          document.getElementById('timerBoxFreeSay').classList.add('d-none')
+
+        document.getElementById('microphoneIcon').classList.remove('d-none')
+        document.getElementById('timerBoxFreeSay').classList.add('d-none')
         document.getElementById("YesOrNoBox").classList.add('d-none')
         document.getElementById("buttonsPartOne").classList.remove('d-none')
         document.getElementById("buttonsPartBox").classList.remove('d-none')
         document.getElementById('buttonsBox').classList.remove('d-none');
-        baseTrack.style.height = '71%';
         document.getElementById('talkBtnBox').style.top = '50%'
       }
 
@@ -212,7 +220,7 @@ async function mountVideo(videoId, videosArr = videoDinamicLocalSrcArr) {
     if (id == 'listYesChicaTrack' || id == 'listYesChicoTrack') {
 
       // if (!baseTrack.paused) {
-        if (baseTrack.currentTime.toString().split('.')[0] == '4') document.getElementById('btnGallery').classList.add('blueHover')
+      if (baseTrack.currentTime.toString().split('.')[0] == '4') document.getElementById('btnGallery').classList.add('blueHover')
       if (baseTrack.currentTime.toString().split('.')[0] == '7') {
         document.getElementById('btnGallery').classList.remove('blueHover')
         document.getElementById('btnPlaces').classList.add('blueHover')
@@ -228,20 +236,20 @@ async function mountVideo(videoId, videosArr = videoDinamicLocalSrcArr) {
           setTimeout(() => {
             document.getElementById('btnNew').classList.remove('blueHover')
           }, 1400)
-          )
-        }
-        // }
+        )
       }
+      // }
+    }
 
     if (id == 'saludoTrack' || id == 'saludoSecTrack' || id == 'saludoChicoTrack' || id == 'saludoChicoSecTrack') {
       // if (!video.paused) {
-        if (baseTrack.currentTime.toString().split('.')[0] == '14') document.getElementById('btnGallery').classList.add('blueHover')
-        if (baseTrack.currentTime.toString().split('.')[0] == '17') {
-          document.getElementById('btnGallery').classList.remove('blueHover')
-          document.getElementById('btnPlaces').classList.add('blueHover')
-        }
-        if (baseTrack.currentTime.toString().split('.')[0] == '19') {
-          document.getElementById('btnPlaces').classList.remove('blueHover')
+      if (baseTrack.currentTime.toString().split('.')[0] == '14') document.getElementById('btnGallery').classList.add('blueHover')
+      if (baseTrack.currentTime.toString().split('.')[0] == '17') {
+        document.getElementById('btnGallery').classList.remove('blueHover')
+        document.getElementById('btnPlaces').classList.add('blueHover')
+      }
+      if (baseTrack.currentTime.toString().split('.')[0] == '19') {
+        document.getElementById('btnPlaces').classList.remove('blueHover')
         document.getElementById('btnHistory').classList.add('blueHover')
       }
       if (baseTrack.currentTime.toString().split('.')[0] == '21') {
@@ -257,37 +265,46 @@ async function mountVideo(videoId, videosArr = videoDinamicLocalSrcArr) {
     }
   };
   // END LISTENERS OR ACTIONS BY VIDEO
-  
-  baseTrack.load()
-  baseTrack.play()
-  console.log(document.querySelector('video'))
+
+  // baseTrack.load()
+  // baseTrack.play()
+  // console.log(document.querySelector('video'))
+  await baseTrack.play()
+  videoBox.appendChild(baseTrack)
 }
+
+
+// async function printVideo (src) {
+
+//   await video.play()
+//   videoBox.appendChild(video)
+// }
 
 function mainBtnsDisabled(isDisabled, alsoTalkBtn = false) {
   document.querySelectorAll('button').forEach(button => {
     if (button.id != 'btnReset') {
       if (alsoTalkBtn && button.id != 'btnActiveRecognizer')
         button.disabled = isDisabled
-        else
+      else
         button.disabled = isDisabled
     }
   })
 }
 
 // function getVideos() {
-  //   return document.querySelectorAll('.videoIA')
-  // }
-  
+//   return document.querySelectorAll('.videoIA')
+// }
+
 // async function mountVideo(videoId) {
-  //   console.log('videoId', videoId);
-  
-  //   // Hide talk button
+//   console.log('videoId', videoId);
+
+//   // Hide talk button
 //   if (videoId != 'reposoTrack' && videoId != 'reposoChicoTrack')
 //     document.getElementById('talkBtnBox').classList.add('d-none')
 
 //   let videoElements = document.querySelectorAll('.videoIA');
 //   videoElements.forEach(video => {
-  //     if (video.id != videoId)
+//     if (video.id != videoId)
 //       document.getElementById(video.id).style.display = 'none';
 //   })
 

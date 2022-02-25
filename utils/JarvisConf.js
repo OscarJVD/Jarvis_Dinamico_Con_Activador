@@ -124,7 +124,7 @@ Jarvis.on(arrAttachedCommands).then(function (i) {
       } else {
 
         if (randomGallery == 1) mountVideo('galeriasChicoMasunoSecTrack')
-        else if (randomGallery git remo== 2) mountVideo('galeriasChicoNuncaFirstTrack')
+        else if (randomGallery == 2) mountVideo('galeriasChicoNuncaFirstTrack')
         else if (randomGallery == 3) mountVideo('galeriasChicoNuncaSecTrack')
         else if (randomGallery == 4) mountVideo('galeriasChicoOpeningFirstTrack')
         else if (randomGallery == 5) mountVideo('galeriasChicoOpeningSecTrack')
